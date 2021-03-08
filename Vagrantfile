@@ -29,6 +29,7 @@ Vagrant.configure("2") do |config|
   # NOTE: This will enable public access to the opened port
   # config.vm.network "forwarded_port", guest: 80, host: 8080
   config.vm.network "forwarded_port", guest: 22, host: 2020, id: 'ssh'
+  config.vm.network "forwarded_port", guest: 54321, host: 54321, id: 'editdb'
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine and only allow access
@@ -63,8 +64,8 @@ Vagrant.configure("2") do |config|
   #   vb.memory = "1024"
   # end
   config.vm.provider "virtualbox" do |vb|
-      vb.memory = "4096"
-      vb.cpus = 2
+      vb.memory = "8192"
+      vb.cpus = 4
       vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
   end  
   #
