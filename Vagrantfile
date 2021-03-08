@@ -19,6 +19,7 @@ Vagrant.configure("2") do |config|
   # `vagrant box outdated`. This is not recommended.
   # config.vm.box_check_update = false
   config.vm.hostname = "qgis218"
+  config.vm.box_version = "0.0.2"
   config.ssh.forward_agent = true
   config.ssh.forward_x11 = true
 
