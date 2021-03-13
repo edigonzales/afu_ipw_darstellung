@@ -186,3 +186,173 @@ WHERE
 AND 
 	profiltyp NOT LIKE 'offenes_Profil'
 ;
+
+-- L_Entl
+CREATE TABLE IF NOT EXISTS afu_vsadssmini2020.t_leitung_entl AS
+SELECT 
+	*
+FROM 
+	afu_vsadssmini2020.v_vsadssmini_leitung
+WHERE 
+	nutzungsart_ist LIKE 'entlastetes_Mischabwasser' 
+AND 
+	funktionhierarchisch LIKE 'PAA.Hauptsammelkanal' 
+AND 
+	funktionhydraulisch NOT LIKE 'Pumpendruckleitung' 
+AND 
+	finanzierung LIKE 'oeffentlich' 
+AND 
+	astatus NOT IN ('weitere.geplant', 'weitere.Projekt')
+;
+
+-- L_SA
+CREATE TABLE IF NOT EXISTS afu_vsadssmini2020.t_leitung_sa AS
+SELECT 
+	*
+FROM 
+	afu_vsadssmini2020.v_vsadssmini_leitung
+WHERE 
+(
+	nutzungsart_ist LIKE 'Schmutzabwasser' OR nutzungsart_ist LIKE 'Industrieabwasser'
+) 
+AND 
+(
+	funktionHierarchisch LIKE 'PAA.Hauptsammelkanal_regional' OR funktionhierarchisch LIKE 'PAA.Hauptsammelkanal' OR funktionhierarchisch LIKE 'PAA.Sammelkanal'
+)
+AND 
+	funktionhydraulisch NOT LIKE 'Pumpendruckleitung' 
+AND 
+	finanzierung LIKE 'oeffentlich' 
+AND 
+	astatus NOT IN ('weitere.geplant', 'weitere.Projekt')
+;
+
+-- L_MA
+CREATE TABLE IF NOT EXISTS afu_vsadssmini2020.t_leitung_ma AS
+SELECT 
+	*
+FROM 
+	afu_vsadssmini2020.v_vsadssmini_leitung
+WHERE 
+	nutzungsart_ist LIKE 'Mischabwasser' 
+AND 
+(
+	funktionHierarchisch LIKE 'PAA.Hauptsammelkanal_regional' OR funktionhierarchisch LIKE 'PAA.Hauptsammelkanal' OR funktionhierarchisch LIKE 'PAA.Sammelkanal'
+)
+AND 
+	funktionhydraulisch NOT LIKE 'Pumpendruckleitung' 
+AND 
+	finanzierung LIKE 'oeffentlich' 
+AND 
+	astatus NOT IN ('weitere.geplant', 'weitere.Projekt')
+;
+
+-- L_RA
+CREATE TABLE IF NOT EXISTS afu_vsadssmini2020.t_leitung_ra AS
+SELECT 
+	*
+FROM 
+	afu_vsadssmini2020.v_vsadssmini_leitung
+WHERE 
+(
+	nutzungsart_ist LIKE 'Regenabwasser' OR nutzungsart_ist LIKE 'Reinabwasser' OR nutzungsart_ist LIKE 'Bachwasser' OR nutzungsart_ist LIKE 'Niederschlagsabwasser'
+) 
+AND 
+(
+	funktionHierarchisch LIKE 'PAA.Hauptsammelkanal_regional' OR funktionhierarchisch LIKE 'PAA.Hauptsammelkanal' OR funktionhierarchisch LIKE 'PAA.Sammelkanal'
+)
+AND 
+	funktionhydraulisch NOT LIKE 'Pumpendruckleitung' 
+AND 
+	finanzierung LIKE 'oeffentlich' 
+AND 
+	astatus NOT IN ('weitere.geplant', 'weitere.Projekt')
+;
+	
+-- L_PD
+CREATE TABLE IF NOT EXISTS afu_vsadssmini2020.t_leitung_pd AS
+SELECT 
+	*
+FROM 
+	afu_vsadssmini2020.v_vsadssmini_leitung 
+WHERE 
+	funktionhydraulisch LIKE 'Pumpendruckleitung' 
+AND 
+	astatus NOT IN ('weitere.geplant','weitere.Projekt')
+;
+
+-- P_Entl
+CREATE TABLE IF NOT EXISTS afu_vsadssmini2020.t_knoten_entl AS
+SELECT 
+	*
+FROM 
+	afu_vsadssmini2020.vsadssmini_knoten 
+WHERE 
+	nutzungsart_ist LIKE 'entlastetes_Mischabwasser' 
+AND 
+	funktionHierarchisch LIKE 'PAA'
+AND 
+(
+	funktion NOT LIKE 'Regenueberlauf' OR funktion NOT LIKE 'Regenbecken%' OR funktion NOT LIKE 'Regenbecken_Regenrueckhaltebecken' OR funktion NOT LIKE 'Regenbecken_Regenrueckhaltekanal' OR funktion NOT LIKE 'Pumpwerk' OR funktion NOT LIKE 'Duekeroberhaupt' OR funktion NOT LIKE 'Trennbauwerk' OR funktion NOT LIKE 'Einleitstelle_gewaesserrelevant' OR funktion NOT LIKE 'Messstelle' OR funktion NOT LIKE 'Versickerungsanlage' OR funktion NOT LIKE 'andere'
+)
+AND 
+	finanzierung LIKE 'oeffentlich'
+;
+
+-- P_SA
+CREATE TABLE IF NOT EXISTS afu_vsadssmini2020.t_knoten_sa AS
+SELECT 
+	*
+FROM 
+	afu_vsadssmini2020.vsadssmini_knoten 
+WHERE 
+(
+	nutzungsart_ist LIKE 'Schmutzabwasser' OR nutzungsart_ist LIKE 'Industrieabwasser'
+) 
+AND 
+	funktionHierarchisch LIKE 'PAA'
+AND 
+(
+	funktion NOT LIKE 'Regenueberlauf' OR funktion NOT LIKE 'Regenbecken%' OR funktion NOT LIKE 'Regenbecken_Regenrueckhaltebecken' OR funktion NOT LIKE 'Regenbecken_Regenrueckhaltekanal' OR funktion NOT LIKE 'Pumpwerk' OR funktion NOT LIKE 'Duekeroberhaupt' OR funktion NOT LIKE 'Trennbauwerk' OR funktion NOT LIKE 'Einleitstelle_gewaesserrelevant' OR funktion NOT LIKE 'Messstelle' OR funktion NOT LIKE 'Versickerungsanlage' OR funktion NOT LIKE 'andere'
+)
+AND 
+	finanzierung LIKE 'oeffentlich'
+;
+
+-- L_MA
+CREATE TABLE IF NOT EXISTS afu_vsadssmini2020.t_knoten_ma AS
+SELECT 
+	*
+FROM 
+	afu_vsadssmini2020.vsadssmini_knoten 
+WHERE 
+	nutzungsart_ist LIKE 'Mischabwasser' 
+AND 
+	funktionHierarchisch LIKE 'PAA'
+AND 
+(
+	funktion NOT LIKE 'Regenueberlauf' OR funktion NOT LIKE 'Regenbecken%' OR funktion NOT LIKE 'Regenbecken_Regenrueckhaltebecken' OR funktion NOT LIKE 'Regenbecken_Regenrueckhaltekanal' OR funktion NOT LIKE 'Pumpwerk' OR funktion NOT LIKE 'Duekeroberhaupt' OR funktion NOT LIKE 'Trennbauwerk' OR funktion NOT LIKE 'Einleitstelle_gewaesserrelevant' OR funktion NOT LIKE 'Messstelle' OR funktion NOT LIKE 'Versickerungsanlage' OR funktion NOT LIKE 'andere'
+)
+AND 
+	finanzierung LIKE 'oeffentlich'
+;
+
+-- L_RA
+CREATE TABLE IF NOT EXISTS afu_vsadssmini2020.t_knoten_ra AS
+SELECT 
+	*
+FROM 
+	afu_vsadssmini2020.vsadssmini_knoten 
+WHERE 
+(
+	nutzungsart_ist LIKE 'Regenabwasser' OR nutzungsart_ist LIKE 'Reinabwasser' OR nutzungsart_ist LIKE 'Bachwasser' OR nutzungsart_ist LIKE 'Niederschlagsabwasser'
+) 
+AND 
+	funktionHierarchisch LIKE 'PAA'
+AND 
+(
+	funktion NOT LIKE 'Regenueberlauf' OR funktion NOT LIKE 'Regenbecken%' OR funktion NOT LIKE 'Regenbecken_Regenrueckhaltebecken' OR funktion NOT LIKE 'Regenbecken_Regenrueckhaltekanal' OR funktion NOT LIKE 'Pumpwerk' OR funktion NOT LIKE 'Duekeroberhaupt' OR funktion NOT LIKE 'Trennbauwerk' OR funktion NOT LIKE 'Einleitstelle_gewaesserrelevant' OR funktion NOT LIKE 'Messstelle' OR funktion NOT LIKE 'Versickerungsanlage' OR funktion NOT LIKE 'andere'
+)
+AND 
+	finanzierung LIKE 'oeffentlich'
+;
